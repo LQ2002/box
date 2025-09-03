@@ -59,10 +59,7 @@ net_inotifyd() {
   while [ ! -f /data/misc/net/rt_tables ] ; do
     sleep 1
   done
-
-  net_dir="/data/misc/net"
-  # Use inotifyd to monitor write events in the /data/misc/net directory for network changes, perhaps we have a better choice of files to monitor (the /proc filesystem is unsupported) and cyclic polling is a bad solution
-  inotifyd "${scripts_dir}/net.inotify" "${net_dir}" > "/dev/null" 2>&1 &
+  inotifyd "${scripts_dir}/net.inotify" "/data/misc/net/rt_tables:w" > "/dev/null" 2>&1 &
 }
 
 start_inotifyd() {
